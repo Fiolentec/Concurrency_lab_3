@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.5.2"
+    }
+}
+
+apply plugin: "me.champeau.gradle.jmh"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.openjdk.jmh:jmh-core:0.5.3'
+    implementation 'org.openjdk.jmh:jmh-generator-annprocess:0.5.3'
+}
+
+jmh {
+    iterations = 10
+    fork = 1
+    timeUnit = 'ns'
+    warmupIterations =10
+    benchmarkMode = ['avgt']
+}
