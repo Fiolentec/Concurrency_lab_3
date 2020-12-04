@@ -1,10 +1,10 @@
 package company;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class DrawGraph extends JPanel {
@@ -52,7 +52,7 @@ public class DrawGraph extends JPanel {
             int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
             int y1 = y0;
             g2.drawLine(x0, y0, x1, y1);
-            if (i%5==0) {
+            if (i % 5 == 0) {
                 String value = Integer.toString(i);
                 g2.drawString(value, x0 - fm.stringWidth(value), y0 + (fm.getAscent() / 2));
             }
@@ -65,7 +65,7 @@ public class DrawGraph extends JPanel {
             int y0 = getHeight() - BORDER_GAP;
             int y1 = y0 - GRAPH_POINT_WIDTH;
             g2.drawLine(x0, y0, x1, y1);
-            if (i%5==0) {
+            if (i % 100 == 0) {
                 String value = Integer.toString(i);
                 g2.drawString(value, x0 - (fm.stringWidth(value) / 2), y0 + fm.getAscent());
             }

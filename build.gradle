@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: "application"
+mainClassName = 'company.BenchmarkTest'
 
 buildscript {
     repositories {
@@ -20,8 +22,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.openjdk.jmh:jmh-core:0.5.3'
-    implementation 'org.openjdk.jmh:jmh-generator-annprocess:0.5.3'
+    implementation 'org.openjdk.jmh:jmh-core:1.26'
+    implementation 'org.openjdk.jmh:jmh-generator-annprocess:1.26'
+    compile 'org.springframework:spring-context:5.0.1.RELEASE'
+
 }
 
 jmh {

@@ -5,9 +5,9 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Queue {
-    private static final int capacity = 5;
+    private static final int capacity = 2;
     private final AtomicInteger permits = new AtomicInteger(capacity);
-    private volatile Boolean stop = false;
+    private final Boolean stop = false;
     QueueNode head;
     QueueNode tail;
     Condition notEmptyCondition, notFullCondition;
@@ -25,7 +25,7 @@ public class Queue {
         boolean wakeUpDeq = false;
         enqLock.lock();
         try {
-            while (permits.get() == 0 && pack!=null) {
+            while (permits.get() == 0 && pack != null) {
                 notFullCondition.await();
             }
             QueueNode node = new QueueNode(pack);
@@ -49,7 +49,7 @@ public class Queue {
     }
 
     public Package dequeue() {
-        Boolean wakeUpEnq = false;
+        boolean wakeUpEnq = false;
         deqLock.lock();
         QueueNode node = null;
         try {

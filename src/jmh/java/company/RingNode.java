@@ -2,8 +2,6 @@ package company;
 
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
-
 public class RingNode {
     RingNode next;
     Queue queue;
@@ -22,25 +20,25 @@ public class RingNode {
         next = null;
     }
 
-    public void setNext(RingNode n){
+    public void setNext(RingNode n) {
         next = n;
     }
 
-    public void start(){
-        while (true){
+    public void start() {
+        while (true) {
             Package pack = queue.dequeue();
-            if(pack==null)
+            if (pack == null)
                 return;
-            if (pack.consumerId != nodeId){
+            if (pack.consumerId != nodeId) {
                 next.queue.enqueue(pack);
-            }else {
+            } else {
                 times.add((System.nanoTime() - pack.startTime));
 //                System.out.println(System.nanoTime() - pack.startTime);
             }
         }
     }
 
-    public void handlePackage(Package pack){
+    public void handlePackage(Package pack) {
         queue.enqueue(pack);
     }
 }
