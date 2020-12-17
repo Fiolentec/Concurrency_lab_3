@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Queue {
-    private static final int capacity = 2;
+    private static final int capacity = 5;
     private final AtomicInteger permits = new AtomicInteger(capacity);
     private final Boolean stop = false;
     QueueNode head;
@@ -25,7 +25,7 @@ public class Queue {
         boolean wakeUpDeq = false;
         enqLock.lock();
         try {
-            while (permits.get() == 0 && pack != null) {
+            while (permits.get() == 0 && pack.consumerId != -1) {
                 notFullCondition.await();
             }
             QueueNode node = new QueueNode(pack);

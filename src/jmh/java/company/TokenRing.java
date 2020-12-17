@@ -28,36 +28,48 @@ public class TokenRing {
         array[len - 1].setNext(array[0]);
     }
 
-    public void computePackage(int K) {
+    public void computePackage(int K) throws InterruptedException {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
                 for (int j = 0; j < K; j++) {
-                    array[random.nextInt(length - 1)]
-                            .handlePackage(new Package(random.nextInt(length - 1), System.nanoTime()));
+                    try {
+                        array[random.nextInt(length - 1)]
+                                .handlePackage(new Package(random.nextInt(length - 1), System.nanoTime()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }).start();
         }
     }
 
-    public void computePackageConcreteAll(int n, int k) {
+    public void computePackageConcreteAll(int n, int k) throws InterruptedException {
         array[n].handlePackage(new Package(k, System.nanoTime()));
     }
 
-    public void computePackageConcreteNode(int n) {
+    public void computePackageConcreteNode(int n) throws InterruptedException {
         Random random = new Random();
         array[n].handlePackage(new Package(random.nextInt(length - 1), System.nanoTime()));
     }
 
     public void start() {
         for (RingNode r : array) {
-            new Thread(r::start).start();
+            new Thread(
+                    () -> {
+                        try {
+                            r.start();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            ).start();
         }
     }
 
-    public void stopAll() {
+    public void stopAll() throws InterruptedException {
         for (RingNode r : array) {
-            r.handlePackage(null);
+            r.handlePackage(new Package(-1,0L));
         }
     }
 }
